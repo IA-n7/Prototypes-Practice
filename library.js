@@ -30,7 +30,11 @@ var library = {
 // p02: Other Playlist - 1 tracks
 
 var printPlaylists = function () {
-
+  var output = "";
+  for (var things in library.playlists) {
+    output += library["playlists"][things]["id"] + ": " + library["playlists"][things]["name"] + " - " + library["playlists"][things]["tracks"].length + " tracks" + "\n" ;
+  }
+  return output;
 }
 
 
@@ -40,7 +44,11 @@ var printPlaylists = function () {
 // t03: Four Thirty-Three by John Cage (Woodstock 1952)
 
 var printTracks = function () {
-
+  var output = "";
+  for (var things in library.tracks) {
+    output += library["tracks"][things]["id"] + ": " + library["tracks"][things]["name"] + " by " + library["tracks"][things]["artist"] + "(" + library["tracks"][things]["album"] + ")" + "\n" ;
+  }
+  return output;
 }
 
 
@@ -50,14 +58,29 @@ var printTracks = function () {
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 
 var printPlaylist = function (playlistId) {
+  var output = "";
+  var tempArray = [];
 
+  for (var track in library.tracks) {
+    tempArray.push(library["tracks"][track]["id"]);
+  }
+
+  output = playlistId + ": " + library["playlists"][playlistId]["name"] + " - " + library["playlists"][playlistId]["tracks"].length + " tracks" + "\n";
+  
+  for (var i = 0; i < tempArray.length; i++){
+    for (var q = 0; q < tempArray.length; q++)
+    if (tempArray[i] == library["playlists"][playlistId]["tracks"][q]) {
+
+    output += library["tracks"][tempArray[i]]["id"] + ": " + library["tracks"][tempArray[i]]["name"] + " by " + library["tracks"][tempArray[i]]["artist"] + "(" + library["tracks"][tempArray[i]]["album"] + ")" + "\n" ;
+    }
+  }
+  return output;
 }
-
 
 // adds an existing track to an existing playlist
 
 var addTrackToPlaylist = function (trackId, playlistId) {
-
+  library["playlists"][playlistId]["tracks"].push(trackId);
 }
 
 
@@ -73,14 +96,58 @@ var uid = function() {
 
 var addTrack = function (name, artist, album) {
 
-}
 
+  var newId = uid();
+  var newTrack = { "id": newId,
+                   "name": name,
+                   "artist": artist,
+                   "album": album };
+
+  var tempArray = [];
+  for (var track in library.tracks) {
+    tempArray.push(library["tracks"][track]["id"]);
+  }
+
+  for (var i = 0; i < tempArray.length; i++) {
+
+    if (tempArray[i] == newId) {
+      while (tempArray[i] == newId) {
+        newId = uid();
+      }
+    }
+  }
+
+  library["tracks"][newId] = newTrack
+}
 
 // adds a playlist to the library
 
 var addPlaylist = function (name) {
 
+  var newId = uid();
+  var newPlaylist = { id: newId,
+                      name: name,
+                      tracks: []
+                    }
+
+  var tempArray = [];
+  for (var track in library.tracks) {
+    tempArray.push(library["tracks"][track]["id"]);
+  }
+  for (var i = 0; i < tempArray.length; i++) {
+
+    if (tempArray[i] == newId) {
+      while (tempArray[i] == newId) {
+        newId = uid();
+      }
+    }
+  }
+
+  library["playlists"][newId] = newPlaylist
 }
+
+addPlaylist("THEBEST");
+console.log(printPlaylists());
 
 
 // STRETCH:
