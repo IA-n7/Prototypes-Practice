@@ -1,7 +1,7 @@
 function Library(name, creator) {
   this.libraryName = name;
-  this.creator = creator;
-  this.playlists = [];
+  this.creator     = creator;
+  this.playlists   = [];
 }
 
 Library.prototype.addPlaylist = function(playlist) {
@@ -10,7 +10,7 @@ Library.prototype.addPlaylist = function(playlist) {
 
 function Playlist(name) {
   this.playlistName = name;
-  this.tracks = [];
+  this.tracks       = [];
   //total duration
   //overall rating (rating of each track averaged)
 }
@@ -19,36 +19,36 @@ Playlist.prototype.addTrack = function(track) {
   this.tracks.push(track);
 };
 
-Playlist.prototype.totalDuration = function(tracks) {
+Playlist.prototype.totalDuration = function() {
   let total = 0;
-  for (let i = 0; i < tracks.length; i++) {
-    total += tracks[i].length;
+  for (let i = 0; i < this.tracks.length; i++) {
+    total += this.tracks[i].length;
   }
   return total;
 };
 
-Playlist.prototype.overallRating = function(tracks) {
+Playlist.prototype.averageRating = function() {
   let average = 0;
   let total = 0;
-  for (let i = 0; i < tracks.length; i++) {
-    total += tracks[i].rating;
+  for (let i = 0; i < this.tracks.length; i++) {
+    total += this.tracks[i].rating;
   }
-  average = total / tracks.length;
+  average = total / this.tracks.length;
   return average;
 };
 
 function Track(title, rating, trackLength) {
-  this.title = title;
+  this.title  = title;
   this.rating = rating;
   this.length = trackLength;
 }
 
-let testLibrary = new Library("Best music library ever", "Ian");
+let testLibrary  = new Library("Best music library ever", "Ian");
 let testPlaylist = new Playlist("Best playlist ever");
-let testTrack1 = new Track("Best Song Ever", 5, 3.5);
-let testTrack2 = new Track("What makes you beautiful", 5, 2.75);
-let testTrack3 = new Track("We Are Never Ever Getting Back Together", 5, 3);
-let testTrack4 = new Track("Shake It Off", 4, 3.25);
+let testTrack1   = new Track("Best Song Ever", 5, 3.5);
+let testTrack2   = new Track("What makes you beautiful", 5, 2.75);
+let testTrack3   = new Track("We Are Never Ever Getting Back Together", 5, 3);
+let testTrack4   = new Track("Shake It Off", 4, 3.25);
 
 testPlaylist.addTrack(testTrack1);
 testPlaylist.addTrack(testTrack2);
@@ -56,20 +56,23 @@ testPlaylist.addTrack(testTrack3);
 testPlaylist.addTrack(testTrack4);
 testLibrary.addPlaylist(testPlaylist);
 
-console.log("======================================================")
+console.log("======================================================");
 console.log("Library name: ", testLibrary.libraryName);
 console.log("Library creator: ", testLibrary.creator);
 console.log("Library playlists: ", testLibrary.playlists);
-console.log("======================================================")
+console.log("======================================================");
 console.log("Playlist name: ", testPlaylist.playlistName);
 console.log("Playlist tracks: ", testPlaylist.tracks);
-console.log("======================================================")
-console.log("Total duration: ", testPlaylist.totalDuration(testPlaylist.tracks));
-console.log("Overall Rating: ", testPlaylist.overallRating(testPlaylist.tracks));
-console.log("======================================================")
+console.log("======================================================");
+console.log("Total duration: ", testPlaylist.totalDuration());
+console.log("Overall Rating: ", testPlaylist.averageRating());
+console.log("======================================================");
 console.log("Track1 title: ", testTrack1.title);
 console.log("Track1 rating: ", testTrack1.rating);
 console.log("Track1 length: ", testTrack1.length);
+console.log("======================================================");
+
+
 
 // var library = {
 //   tracks: { t01: { id: "t01",
